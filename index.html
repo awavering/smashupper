@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>Smashupper</title>
+  <meta name="description" content="A simple tool for assigning Smash Up factions.">
+  <!--<meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link href='pocketfox_logo.png' rel='icon' />
+  <link href='pocketfox_logo.png' rel='apple-touch-icon' />
+  <link href='pocketfox_logo.png' rel='apple-touch-startup-image' />-->
+<style>
+body {
+	width: 350px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	font-size: 20px;
+}
+input[type="checkbox"] {
+    width:16px;
+    height:16px;
+}
+select {
+	font-size:12pt;
+}
+.faction_group {
+	padding: 7px;
+}
+.faction_group label{
+	margin-left: 5px;
+}
+#submit {
+    font-size: 18px;
+	font-weight: bold;
+	padding: 24px;
+	margin: 24px;
+	border: 24px;
+	cursor: hand;
+	background-color: yellow;
+}
+#results {
+    line-height: 1.2;
+}
+</style>
+<script>
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
+}
+
+function factionize(form) {
+	if (form.group.value == "") {
+        alert("Faction group must be selected.");
+        return false;
+    }
+	var players = form.players.value;
+    var faction_group = form.group.value;
+	var test_results = "players: " + form.players.value + ", " + "group: " + form.group.value;
+	console.log(test_results);
+
+	switch(form.group.value) {
+      case "core":
+		factions = ["Pirates", "Ninjas", "Zombies", "Robots", "Dinosaurs", "Wizards", "Tricksters", "Aliens"];
+        break;
+      case "maxwell":
+		factions = ["Pirates", "Ninjas", "Zombies", "Robots", "Dinosaurs", "Wizards", "Tricksters", "Aliens", "Killer Plants", "Ghosts", "Steampunks", "Bear Cavalry", "Cthulhu Cultists", "Elder Things", "Innsmouth", "Miskatonic University", "Cyborg Apes", "Shapeshifters", "Vampires", "Mad Scientists", "Giant Ants", "Werewolves", "Sharks", "Superheroes", "Greeks", "Dragons"];
+        break;
+      case "all":
+		factions = ["Pirates", "Ninjas", "Zombies", "Robots", "Dinosaurs", "Wizards", "Tricksters", "Aliens", "Killer Plants", "Ghosts", "Steampunks", "Bear Cavalry", "Cthulhu Cultists", "Elder Things", "Innsmouth", "Miskatonic University", "Time Travelers", "Cyborg Apes", "Super Spies", "Shapeshifters", "Geeks", "Vampires", "Mad Scientists", "Giant Ants", "Werewolves", "Sharks", "Superheroes", "Greeks", "Dragons"];
+        break;
+    default:
+		factions = ["Pirates", "Ninjas", "Robots", "Zombies"];
+		break;
+	}
+	//factions = ["pirates", "ninjas", "robots", "zombies"];
+	shuffled_factions = shuffle(factions);
+	var results  = "";
+	for (i = 1; i <= form.players.value; i++) {
+	  results += "<p>Player " + i + ": " + shuffled_factions[2*i-2] + ", " + shuffled_factions[2*i-1] + "</p>";
+	}
+    document.getElementById("results").innerHTML = results;
+}
+</script>
+</head>
+<body>
+<form id="form">
+	<h1>Smash Up Faction Selector</h1>
+	<div id="players">
+	<p>Players:
+		<select name="players">
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+			<option>6</option>
+			<option>7</option>
+			<option>8</option>
+		</select>
+	</p>
+	</div>
+	<div id="factions">
+		<div class="faction_group"><input type="radio" name="group" value="core" id="core"><label for="core">Core Factions</label></div>
+		<div class="faction_group"><input type="radio" name="group" value="maxwell" id="maxwell"><label for="maxwell">Maxwell Manor Factions</label></div>
+		<div class="faction_group"><input type="radio" name="group" value="all" id="all"><label for="all">All Factions</label></div>
+		<center><div><input type="button" name="button" value="Assign Factions" onClick="factionize(this.form)" id="submit"></div></center>
+	</div>
+</form>
+<div id="results"></div>
+</body
+</html>

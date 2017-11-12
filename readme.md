@@ -1,0 +1,1 @@
+Faction json from <a href="https://github.com/thejoshwolfe/factions">thejoshwolfe/factions</a>
